@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💕 我们的故事 - 情侣回忆录</title>
+<style>
+/* ========== CSS Variables ========== */
+:root {
+  --pink: #e91e63;
+  --pink-light: #f8bbd0;
+  --pink-dark: #c2185b;
+  --rose: #f06292;
+  --white: #ffffff;
+  --bg: #fff5f7;
+  --card-bg: #ffffff;
+  --text: #4a4a4a;
+  --text-light: #888888;
+  --shadow: 0 4px 20px rgba(233, 30, 99, 0.08);
+  --shadow-hover: 0 8px 32px rgba(233, 30, 99, 0.15);
+  --radius: 16px;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========== Reset & Base ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ========== Floating Hearts Background ========== */
+.hearts-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.heart-float {
+  position: absolute;
+  animation: floatUp linear infinite;
+  opacity: 0.3;
+  font-size: 20px;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(100vh) rotate(0deg) scale(0); opacity: 0; }
+  10% { opacity: 0.3; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(-10vh) rotate(360deg) scale(1); opacity: 0; }
+}
+
+/* ========== Header / Hero ========== */
+.hero {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 40px 20px 30px;
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f48fb1 100%);
+  border-radius: 0 0 40px 40px;
+  box-shadow: 0 4px 30px rgba(233, 30, 99, 0.1);
+}
+
+.hero h1 {
+  font-size: 2.4em;
+  color: var(--pink-dark);
+  margin-bottom: 6px;
+  letter-spacing: 2px;
+}
+
+.hero .subtitle {
+  color: #ad1457;
+  font-size: 1.05em;
+  opacity: 0.85;
+}
+
+.hero .hearts-row {
+  font-size: 28px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* ========== Stats Bar ========== */
+.stats-bar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: -20px 20px 0;
+  padding: 0 20px;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 18px 28px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  min-width: 110px;
+  transition: var(--transition);
+}
+
+.stat-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.stat-card .stat-num {
+  font-size: 1.8em;
+  font-weight: 700;
+  color: var(--pink);
+}
+
+.stat-card .stat-label {
+  font-size: 0.8em;
+  color: var(--text-light);
+  margin-top: 2px;
+}
+
+/* ========== Main Layout ========== */
+.main-container {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px 20px 40px;
+}
+
+/* ========== Actions Bar ========== */
+.actions-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 50px;
+  font-size: 0.95em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+  color: white;
+  box-shadow: 0 4px 16px rgba(233, 30, 99, 0.3);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 24px rgba(233, 30, 99, 0.45);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: var(--card-bg);
+  color: var(--pink);
+  border: 2px solid var(--pink-light);
+}
+
+.btn-outline:hover {
+  background: #fce4ec;
+  border-color: var(--pink);
+}
+
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 0.82em;
+}
+
+.btn-danger {
+  background: #fff;
+  color: #e53935;
+  border: 1.5px solid #ef9a9a;
+}
+
+.btn-danger:hover {
+  background: #ffebee;
+  border-color: #e53935;
+}
+
+/* ========== Filter Chips ========== */
+.filter-bar {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.chip {
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 0.85em;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1.5px solid var(--pink-light);
+  background: var(--card-bg);
+  color: var(--text);
+  transition: var(--transition);
+  font-family: inherit;
+}
+
+.chip:hover {
+  border-color: var(--pink);
+  color: var(--pink);
+}
+
+.chip.active {
+  background: var(--pink);
+  color: white;
+  border-color: var(--pink);
+}
+
+.chip .emoji { margin-right: 3px; }
+
+/* ========== Search ========== */
+.search-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 20px;
+  border: 2px solid var(--pink-light);
+  border-radius: 50px;
+  font-size: 0.95em;
+  outline: none;
+  transition: var(--transition);
+  font-family: inherit;
+  background: var(--card-bg);
+}
+
+.search-input:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 4px rgba(233, 30, 99, 0.08);
+}
+
+/* ========== Timeline ========== */
+.timeline {
+  position: relative;
+  padding-left: 60px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 28px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--pink-light), var(--pink), var(--pink-light));
+  border-radius: 2px;
+}
+
+.timeline-date-marker {
+  position: relative;
+  margin: 28px 0 16px -60px;
+  padding-left: 60px;
+}
+
+.timeline-date-marker:first-child {
+  margin-top: 0;
+}
+
+.timeline-date-dot {
+  position: absolute;
+  left: 21px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background: var(--pink);
+  border-radius: 50%;
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 0 3px var(--pink-light);
+  z-index: 1;
+}
+
+.timeline-date-text {
+  font-weight: 700;
+  color: var(--pink-dark);
+  font-size: 1em;
+  padding-left: 10px;
+}
+
+/* ========== Memory Cards ========== */
+.memory-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  position: relative;
+  border-left: 4px solid var(--pink-light);
+  cursor: default;
+}
+
+.memory-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateX(4px);
+  border-left-color: var(--pink);
+}
+
+.memory-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.memory-card .card-title {
+  font-size: 1.15em;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+  min-width: 200px;
+}
+
+.memory-card .card-date {
+  font-size: 0.82em;
+  color: var(--pink);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.memory-card .card-category {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-size: 0.75em;
+  font-weight: 600;
+  background: #fce4ec;
+  color: var(--pink);
+  margin-top: 8px;
+}
+
+.memory-card .card-desc {
+  margin-top: 10px;
+  color: var(--text-light);
+  font-size: 0.92em;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.memory-card .card-image {
+  margin-top: 12px;
+  border-radius: 12px;
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.memory-card .card-image:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-hover);
+}
+
+.memory-card .card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  justify-content: flex-end;
+}
+
+/* ========== Empty State ========== */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-light);
+}
+
+.empty-state .empty-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.empty-state h3 {
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  font-size: 0.95em;
+}
+
+/* ========== Modal ========== */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 32px;
+  width: 100%;
+  max-width: 550px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal h2 {
+  text-align: center;
+  color: var(--pink-dark);
+  margin-bottom: 24px;
+  font-size: 1.4em;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+  font-size: 0.9em;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  font-size: 0.95em;
+  outline: none;
+  transition: var(--transition);
+  font-family: inherit;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 4px rgba(233, 30, 99, 0.06);
+}
+
+.form-group textarea {
+  min-height: 100px;
+}
+
+.image-preview {
+  display: block;
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+/* ========== Image Lightbox ========== */
+.lightbox {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  animation: fadeIn 0.2s ease;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+/* ========== Toast ========== */
+.toast-container {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.toast {
+  background: #333;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 0.9em;
+  font-weight: 500;
+  animation: toastIn 0.4s ease, toastOut 0.4s ease 1.8s forwards;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.toast.success { background: #2e7d32; }
+.toast.error { background: #c62828; }
+
+@keyframes toastIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes toastOut {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-20px); opacity: 0; }
+}
+
+/* ========== Special Dates Section ========== */
+.special-dates {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.date-highlight {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 16px 24px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  flex: 1;
+  min-width: 160px;
+  max-width: 220px;
+}
+
+.date-highlight .highlight-icon {
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.date-highlight .highlight-label {
+  font-size: 0.8em;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+
+.date-highlight .highlight-value {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: var(--pink-dark);
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 600px) {
+  .hero h1 { font-size: 1.6em; }
+  .timeline { padding-left: 44px; }
+  .timeline::before { left: 20px; }
+  .timeline-date-dot { left: 13px; width: 14px; height: 14px; }
+  .timeline-date-marker { margin-left: -44px; padding-left: 44px; }
+  .stats-bar { gap: 10px; margin: -20px 10px 0; }
+  .stat-card { padding: 12px 16px; min-width: 80px; }
+  .stat-card .stat-num { font-size: 1.3em; }
+  .modal { padding: 20px; border-radius: 16px; }
+  .memory-card .card-header { flex-direction: column; }
+  .special-dates { flex-direction: column; align-items: center; }
+  .date-highlight { max-width: 100%; width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- Floating Hearts Background -->
+<div class="hearts-bg" id="heartsBg"></div>
+
+<!-- Hero Section -->
+<header class="hero">
+  <div class="hearts-row">💕 💖 💕</div>
+  <h1>我们的故事</h1>
+  <p class="subtitle">记录属于我们的每一个甜蜜瞬间 ✨</p>
+</header>
+
+<!-- Stats Bar -->
+<div class="stats-bar" id="statsBar">
+  <div class="stat-card">
+    <div class="stat-num" id="totalMemories">0</div>
+    <div class="stat-label">📝 回忆总数</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num" id="daysTogether">0</div>
+    <div class="stat-label">💑 在一起天数</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num" id="nextDays">0</div>
+    <div class="stat-label">🎉 纪念日倒计时</div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-container">
+  <!-- Special Dates -->
+  <div class="special-dates" id="specialDates"></div>
+
+  <!-- Actions Bar -->
+  <div class="actions-bar">
+    <button class="btn btn-primary" onclick="openModal()">
+      ✨ 添加回忆
+    </button>
+    <button class="btn btn-outline btn-sm" onclick="exportData()">
+      📥 导出备份
+    </button>
+    <button class="btn btn-outline btn-sm" onclick="document.getElementById('importFile').click()">
+      📤 导入备份
+    </button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+  </div>
+
+  <!-- Search -->
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="🔍 搜索回忆..." id="searchInput" oninput="renderTimeline()">
+  </div>
+
+  <!-- Filter Chips -->
+  <div class="filter-bar" id="filterBar">
+    <button class="chip active" data-cat="all" onclick="setFilter('all', this)">🌟 全部</button>
+    <button class="chip" data-cat="约会" onclick="setFilter('约会', this)">🌹 约会</button>
+    <button class="chip" data-cat="旅行" onclick="setFilter('旅行', this)">✈️ 旅行</button>
+    <button class="chip" data-cat="纪念日" onclick="setFilter('纪念日', this)">💝 纪念日</button>
+    <button class="chip" data-cat="第一次" onclick="setFilter('第一次', this)">🎀 第一次</button>
+    <button class="chip" data-cat="日常" onclick="setFilter('日常', this)">☀️ 日常</button>
+    <button class="chip" data-cat="惊喜" onclick="setFilter('惊喜', this)">🎁 惊喜</button>
+    <button class="chip" data-cat="美食" onclick="setFilter('美食', this)">🍽️ 美食</button>
+    <button class="chip" data-cat="电影" onclick="setFilter('电影', this)">🎬 电影</button>
+  </div>
+
+  <!-- Timeline -->
+  <div class="timeline" id="timeline">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">💌</div>
+      <h3>还没有回忆哦</h3>
+      <p>点击「添加回忆」开始记录你们的甜蜜瞬间吧~</p>
+    </div>
+  </div>
+</div>
+
+<!-- Add/Edit Memory Modal -->
+<div class="modal-overlay" id="modalOverlay" style="display:none" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <h2 id="modalTitle">✨ 添加甜蜜回忆</h2>
+    <div class="form-group">
+      <label>📌 标题</label>
+      <input type="text" id="memTitle" placeholder="给这个回忆取个名字..." maxlength="50">
+    </div>
+    <div class="form-group">
+      <label>📅 日期</label>
+      <input type="date" id="memDate">
+    </div>
+    <div class="form-group">
+      <label>🏷️ 分类</label>
+      <select id="memCategory">
+        <option value="约会">🌹 约会</option>
+        <option value="旅行">✈️ 旅行</option>
+        <option value="纪念日">💝 纪念日</option>
+        <option value="第一次">🎀 第一次</option>
+        <option value="日常">☀️ 日常</option>
+        <option value="惊喜">🎁 惊喜</option>
+        <option value="美食">🍽️ 美食</option>
+        <option value="电影">🎬 电影</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>💬 描述</label>
+      <textarea id="memDesc" placeholder="记录下这个美好瞬间..." maxlength="1000"></textarea>
+    </div>
+    <div class="form-group">
+      <label>🖼️ 照片（可选）</label>
+      <input type="file" id="memImage" accept="image/*" onchange="previewImage()">
+      <img class="image-preview" id="imagePreview" style="display:none">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal()">取消</button>
+      <button class="btn btn-primary" onclick="saveMemory()">💾 保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" style="display:none" onclick="closeLightbox()">
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+/* ========== Data Store (dual mode: API server or localStorage) ========== */
+const STORAGE_KEY = 'couple_memories';
+const SETTINGS_KEY = 'couple_settings';
+
+// Detect if we're running on the server (HTTP) or locally (file://)
+const IS_SERVER_MODE = window.location.protocol === 'http:' || window.location.protocol === 'https:';
+const API_BASE = IS_SERVER_MODE ? '/api' : null;
+
+let memories = [];
+let currentFilter = 'all';
+let editingId = null;
+
+// Default settings
+const defaultSettings = {
+  anniversaryDate: '',
+  partner1: '👦 男朋友',
+  partner2: '👧 女朋友',
+};
+
+let settings = { ...defaultSettings };
+
+// ===== API Mode =====
+async function apiFetch(url, options = {}) {
+  const res = await fetch(url, {
+    headers: { 'Content-Type': 'application/json' },
+    ...options,
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  return res.json();
+}
+
+async function loadMemoriesAPI() {
+  try {
+    memories = await apiFetch(`${API_BASE}/memories`);
+  } catch(e) {
+    console.error('加载回忆失败:', e);
+    memories = [];
+  }
+}
+
+async function loadSettingsAPI() {
+  try {
+    const s = await apiFetch(`${API_BASE}/settings`);
+    settings = { ...defaultSettings, ...s };
+  } catch(e) {
+    settings = { ...defaultSettings };
+  }
+}
+
+async function saveMemoryAPI(memory) {
+  const result = await apiFetch(`${API_BASE}/memories`, {
+    method: 'POST',
+    body: JSON.stringify(memory),
+  });
+  return result.memory;
+}
+
+async function updateMemoryAPI(id, updates) {
+  await apiFetch(`${API_BASE}/memories/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(updates),
+  });
+}
+
+async function deleteMemoryAPI(id) {
+  await apiFetch(`${API_BASE}/memories/${id}`, { method: 'DELETE' });
+}
+
+async function saveSettingsAPI() {
+  await apiFetch(`${API_BASE}/settings`, {
+    method: 'PUT',
+    body: JSON.stringify(settings),
+  });
+}
+
+// ===== LocalStorage Mode =====
+function loadMemoriesLocal() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    memories = raw ? JSON.parse(raw) : [];
+  } catch(e) {
+    memories = [];
+  }
+}
+
+function loadSettingsLocal() {
+  try {
+    const raw = localStorage.getItem(SETTINGS_KEY);
+    settings = raw ? { ...defaultSettings, ...JSON.parse(raw) } : { ...defaultSettings };
+  } catch(e) {
+    settings = { ...defaultSettings };
+  }
+}
+
+function saveMemoriesLocal() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(memories));
+}
+
+function saveSettingsLocal() {
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+}
+
+// ===== Unified Interface =====
+async function loadData() {
+  if (IS_SERVER_MODE) {
+    await Promise.all([loadMemoriesAPI(), loadSettingsAPI()]);
+  } else {
+    loadMemoriesLocal();
+    loadSettingsLocal();
+  }
+}
+
+async function saveMemories() {
+  // No-op in API mode (saved individually), used as fallback
+  if (!IS_SERVER_MODE) saveMemoriesLocal();
+}
+
+async function saveSettings() {
+  if (IS_SERVER_MODE) {
+    await saveSettingsAPI();
+  } else {
+    saveSettingsLocal();
+  }
+}
+
+/* ========== Helpers ========== */
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T00:00:00');
+  const weekDays = ['日','一','二','三','四','五','六'];
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const w = weekDays[d.getDay()];
+  return `${y}年${m}月${day}日 星期${w}`;
+}
+
+function daysBetween(d1, d2) {
+  const ms = d2.getTime() - d1.getTime();
+  return Math.floor(ms / (1000 * 60 * 60 * 24));
+}
+
+function generateId() {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2, 6);
+}
+
+function showToast(msg, type = '') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  toast.textContent = msg;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 2500);
+}
+
+/* ========== Lightbox ========== */
+function openLightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+/* ========== Modal ========== */
+function openModal(editId = null) {
+  editingId = editId;
+  document.getElementById('modalOverlay').style.display = 'flex';
+  document.getElementById('modalTitle').textContent = editId ? '✏️ 编辑回忆' : '✨ 添加甜蜜回忆';
+  document.body.style.overflow = 'hidden';
+
+  if (editId) {
+    const mem = memories.find(m => m.id === editId);
+    if (mem) {
+      document.getElementById('memTitle').value = mem.title;
+      document.getElementById('memDate').value = mem.date;
+      document.getElementById('memCategory').value = mem.category;
+      document.getElementById('memDesc').value = mem.desc;
+      if (mem.image) {
+        document.getElementById('imagePreview').src = mem.image;
+        document.getElementById('imagePreview').style.display = 'block';
+      } else {
+        document.getElementById('imagePreview').style.display = 'none';
+      }
+    }
+  } else {
+    document.getElementById('memTitle').value = '';
+    document.getElementById('memDate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('memCategory').value = '约会';
+    document.getElementById('memDesc').value = '';
+    document.getElementById('memImage').value = '';
+    document.getElementById('imagePreview').style.display = 'none';
+  }
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').style.display = 'none';
+  document.body.style.overflow = '';
+  editingId = null;
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) {
+    closeModal();
+  }
+}
+
+function previewImage() {
+  const file = document.getElementById('memImage').files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) {
+    showToast('图片大小不能超过 5MB', 'error');
+    document.getElementById('memImage').value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('imagePreview').src = e.target.result;
+    document.getElementById('imagePreview').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+async function saveMemory() {
+  const title = document.getElementById('memTitle').value.trim();
+  const date = document.getElementById('memDate').value;
+  const category = document.getElementById('memCategory').value;
+  const desc = document.getElementById('memDesc').value.trim();
+  const image = document.getElementById('imagePreview').style.display !== 'none'
+    ? document.getElementById('imagePreview').src : '';
+
+  if (!title) { showToast('请输入标题~', 'error'); return; }
+  if (!date) { showToast('请选择日期~', 'error'); return; }
+
+  if (editingId) {
+    if (IS_SERVER_MODE) {
+      await updateMemoryAPI(editingId, { title, date, category, desc, image });
+      await loadMemoriesAPI();
+    } else {
+      const idx = memories.findIndex(m => m.id === editingId);
+      if (idx !== -1) {
+        memories[idx] = { ...memories[idx], title, date, category, desc, image };
+      }
+      saveMemoriesLocal();
+    }
+    showToast('回忆已更新 💖', 'success');
+  } else {
+    if (IS_SERVER_MODE) {
+      await saveMemoryAPI({ title, date, category, desc, image });
+      await loadMemoriesAPI();
+    } else {
+      const newMemory = {
+        id: generateId(),
+        title,
+        date,
+        category,
+        desc,
+        image,
+        createdAt: new Date().toISOString(),
+      };
+      memories.unshift(newMemory);
+      saveMemoriesLocal();
+    }
+    showToast('甜蜜回忆已保存 💕', 'success');
+  }
+
+  closeModal();
+  renderAll();
+}
+
+async function deleteMemory(id) {
+  if (!confirm('确定要删除这条回忆吗？😢')) return;
+  if (IS_SERVER_MODE) {
+    await deleteMemoryAPI(id);
+    await loadMemoriesAPI();
+  } else {
+    memories = memories.filter(m => m.id !== id);
+    saveMemoriesLocal();
+  }
+  showToast('回忆已删除', '');
+  renderAll();
+}
+
+/* ========== Render ========== */
+function setFilter(cat, el) {
+  currentFilter = cat;
+  document.querySelectorAll('#filterBar .chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderTimeline();
+}
+
+function getFilteredMemories() {
+  let filtered = [...memories];
+  if (currentFilter !== 'all') {
+    filtered = filtered.filter(m => m.category === currentFilter);
+  }
+  const search = document.getElementById('searchInput').value.trim().toLowerCase();
+  if (search) {
+    filtered = filtered.filter(m =>
+      m.title.toLowerCase().includes(search) ||
+      m.desc.toLowerCase().includes(search) ||
+      m.category.toLowerCase().includes(search)
+    );
+  }
+  // Sort by date descending
+  filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+  return filtered;
+}
+
+function renderTimeline() {
+  const timeline = document.getElementById('timeline');
+  const emptyState = document.getElementById('emptyState');
+  const filtered = getFilteredMemories();
+
+  if (filtered.length === 0) {
+    timeline.innerHTML = '';
+    timeline.appendChild(emptyState);
+    emptyState.style.display = 'block';
+    return;
+  }
+
+  // Group by year-month
+  const groups = {};
+  filtered.forEach(m => {
+    const key = m.date.substring(0, 7); // YYYY-MM
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(m);
+  });
+
+  let html = '';
+  for (const [key, mems] of Object.entries(groups)) {
+    const [y, mo] = key.split('-');
+    html += `
+      <div class="timeline-date-marker">
+        <div class="timeline-date-dot"></div>
+        <span class="timeline-date-text">${y}年${parseInt(mo)}月</span>
+      </div>`;
+
+    mems.forEach(m => {
+      html += `
+        <div class="memory-card">
+          <div class="card-header">
+            <span class="card-title">${escapeHtml(m.title)}</span>
+            <span class="card-date">📅 ${formatDate(m.date)}</span>
+          </div>
+          <span class="card-category">${m.category}</span>
+          ${m.desc ? `<div class="card-desc">${escapeHtml(m.desc)}</div>` : ''}
+          ${m.image ? `<img class="card-image" src="${m.image}" alt="照片" loading="lazy" onclick="openLightbox('${m.image}')">` : ''}
+          <div class="card-actions">
+            <button class="btn btn-outline btn-sm" onclick="openModal('${m.id}')">✏️ 编辑</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteMemory('${m.id}')">🗑️ 删除</button>
+          </div>
+        </div>`;
+    });
+  }
+
+  // Keep emptyState in DOM but hidden, for reuse
+  const es = document.getElementById('emptyState');
+  timeline.innerHTML = html;
+  if (es) timeline.appendChild(es);
+  document.getElementById('emptyState').style.display = 'none';
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function renderStats() {
+  document.getElementById('totalMemories').textContent = memories.length;
+
+  // Days together
+  if (settings.anniversaryDate) {
+    const start = new Date(settings.anniversaryDate + 'T00:00:00');
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const days = daysBetween(start, today);
+    document.getElementById('daysTogether').textContent = days >= 0 ? days : '--';
+
+    // Next anniversary countdown
+    const thisYear = today.getFullYear();
+    let nextAnniversary = new Date(thisYear, start.getMonth(), start.getDate());
+    if (nextAnniversary <= today) {
+      nextAnniversary = new Date(thisYear + 1, start.getMonth(), start.getDate());
+    }
+    const daysLeft = daysBetween(today, nextAnniversary);
+    document.getElementById('nextDays').textContent = daysLeft;
+  } else {
+    document.getElementById('daysTogether').textContent = '--';
+    document.getElementById('nextDays').textContent = '--';
+  }
+}
+
+function renderSpecialDates() {
+  const container = document.getElementById('specialDates');
+  if (!settings.anniversaryDate) {
+    container.innerHTML = `
+      <div class="date-highlight" style="cursor:pointer" onclick="setAnniversary()">
+        <div class="highlight-icon">💝</div>
+        <div class="highlight-label">点击设置</div>
+        <div class="highlight-value">纪念日</div>
+      </div>`;
+    return;
+  }
+
+  const start = new Date(settings.anniversaryDate + 'T00:00:00');
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const totalDays = daysBetween(start, today);
+
+  // Next anniversary
+  const thisYear = today.getFullYear();
+  let nextAnniversary = new Date(thisYear, start.getMonth(), start.getDate());
+  if (nextAnniversary <= today) {
+    nextAnniversary = new Date(thisYear + 1, start.getMonth(), start.getDate());
+  }
+  const daysLeft = daysBetween(today, nextAnniversary);
+
+  // Years together
+  const yearsTogether = Math.floor(totalDays / 365);
+  const remainDays = totalDays % 365;
+
+  container.innerHTML = `
+    <div class="date-highlight">
+      <div class="highlight-icon">💑</div>
+      <div class="highlight-label">已经在一起</div>
+      <div class="highlight-value">${totalDays} 天</div>
+    </div>
+    <div class="date-highlight">
+      <div class="highlight-icon">💝</div>
+      <div class="highlight-label">相恋周年</div>
+      <div class="highlight-value">${yearsTogether}年${remainDays}天</div>
+    </div>
+    <div class="date-highlight">
+      <div class="highlight-icon">🎉</div>
+      <div class="highlight-label">下次纪念日</div>
+      <div class="highlight-value">还有 ${daysLeft} 天</div>
+    </div>
+    <div class="date-highlight" style="cursor:pointer" onclick="setAnniversary()">
+      <div class="highlight-icon">⚙️</div>
+      <div class="highlight-label">纪念日</div>
+      <div class="highlight-value" style="font-size:0.85em">${formatDate(settings.anniversaryDate)}</div>
+    </div>`;
+}
+
+async function setAnniversary() {
+  const dateStr = prompt('请设置你们在一起的日子（纪念日）：\n格式：YYYY-MM-DD\n例如：2024-01-01', settings.anniversaryDate || '');
+  if (dateStr && /^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    settings.anniversaryDate = dateStr;
+    await saveSettings();
+    renderAll();
+    showToast('纪念日已设置 💝', 'success');
+  } else if (dateStr) {
+    showToast('日期格式不正确，请使用 YYYY-MM-DD 格式', 'error');
+  }
+}
+
+function renderAll() {
+  renderStats();
+  renderSpecialDates();
+  renderTimeline();
+}
+
+/* ========== Export / Import ========== */
+function exportData() {
+  const data = {
+    memories,
+    settings,
+    exportedAt: new Date().toISOString(),
+    version: '1.0',
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `情侣回忆录_备份_${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('备份已下载 📥', 'success');
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.memories || !Array.isArray(data.memories)) {
+        throw new Error('无效的备份文件');
+      }
+      if (!confirm(`即将导入 ${data.memories.length} 条回忆，是否继续？\n（现有数据将被替换）`)) return;
+
+      if (IS_SERVER_MODE) {
+        // Import to server: delete all, then add each
+        for (const m of memories) {
+          await deleteMemoryAPI(m.id);
+        }
+        for (const m of data.memories) {
+          const { id, createdAt, ...rest } = m;
+          await saveMemoryAPI(rest);
+        }
+        if (data.settings) {
+          settings = { ...defaultSettings, ...data.settings };
+          await saveSettingsAPI();
+        }
+        await loadData();
+      } else {
+        memories = data.memories;
+        if (data.settings) settings = { ...defaultSettings, ...data.settings };
+        saveMemoriesLocal();
+        saveSettingsLocal();
+      }
+      renderAll();
+      showToast(`成功导入 ${data.memories.length} 条回忆 📤`, 'success');
+    } catch(err) {
+      showToast('导入失败，请检查文件格式 😢', 'error');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+/* ========== Floating Hearts ========== */
+function createFloatingHearts() {
+  const container = document.getElementById('heartsBg');
+  const hearts = ['💕', '💖', '💗', '💝', '✨', '🌸', '🩷', '💌'];
+  for (let i = 0; i < 20; i++) {
+    const span = document.createElement('span');
+    span.className = 'heart-float';
+    span.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+    span.style.left = Math.random() * 100 + '%';
+    span.style.fontSize = (14 + Math.random() * 20) + 'px';
+    span.style.animationDuration = (8 + Math.random() * 15) + 's';
+    span.style.animationDelay = Math.random() * 12 + 's';
+    container.appendChild(span);
+  }
+}
+
+/* ========== Keyboard Shortcuts ========== */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    if (document.getElementById('lightbox').style.display === 'flex') {
+      closeLightbox();
+    } else if (document.getElementById('modalOverlay').style.display === 'flex') {
+      closeModal();
+    }
+  }
+  if (e.ctrlKey && e.key === 'n') {
+    e.preventDefault();
+    openModal();
+  }
+});
+
+/* ========== Init ========== */
+async function init() {
+  await loadData();
+  createFloatingHearts();
+  renderAll();
+
+  // Set today as default date for new memories
+  document.getElementById('memDate').value = new Date().toISOString().split('T')[0];
+}
+
+init();
+
+console.log('💕 情侣回忆录已就绪！');
+console.log('   运行模式:', IS_SERVER_MODE ? '🌐 服务器模式 (数据共享)' : '💻 本地模式 (数据仅本浏览器)');
+console.log('   - 快捷键 Ctrl+N: 添加新回忆');
+console.log('   - 快捷键 Esc: 关闭弹窗');
+console.log('   愿你们的每一天都充满甜蜜与幸福 💑');
+</script>
+</body>
+</html>

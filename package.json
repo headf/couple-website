@@ -1,0 +1,12 @@
+{
+  "name": "couple-memories",
+  "version": "1.0.0",
+  "description": "💕 情侣回忆录 - 记录属于我们的每一个甜蜜瞬间",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["couple", "memories", "love"],
+  "license": "MIT"
+}
